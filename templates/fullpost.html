@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/combined.css">
+    <link rel="stylesheet" href="../static/css/combined2.css">
+    <title>Document</title>
+    <style>
+        main img{
+            height: 80vh;
+            width: 100%;
+        }
+        .div1{
+            display: flex;
+            justify-content: space-between;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-bottom: #2b124c 2px solid;
+        }
+        .div1 button{
+            border: none;
+            background-color: transparent;
+        }
+        .comments{
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .comments .comment{
+            padding-left: 0px;
+            width: 100%;
+            border-bottom: 1px solid #2b124c;
+            border-left: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .comment{
+            display: flex;
+            justify-content: space-between;
+        }
+        .comment_name{
+            display: flex;
+            flex-direction: row;
+        }
+        .comment h6{
+            align-self: flex-start;
+            height: 100%;
+            font-size: 18px;
+        }
+        .comment p{
+        align-self: center;
+        margin-left: 10px;
+        }
+        #commentarea{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        border-left: none;
+        }
+        #commentarea input{
+            width: 80%;
+        }
+        #commentarea button{
+            width: 20%;
+            background-color: #2b124c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="webname">
+                <button id="navbarBtn" onclick="goBack()"><img src="../static/img/backarrow.png" alt=""></button>
+                <a href="{{ url_for('othersprofile', acc_id=post.acc_id) }}"><h1>{{post.account.username}}</h1></a>
+            </div>
+            {% if current_user.is_authenticated and post.account.user_id == current_user.user_id %}
+            <form action="{{ url_for('delete_post',post_id=post.post_id) }}" method="post">
+            <button id="navbarBtn" data-post-id="{{ post.id }}"><img src="../static/img/red-trash-can-icon.png" alt="" style="width: 70px;height: 50px;"></button>
+            </form>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <img src="{{ url_for('static', filename='uploads/' + post.img.replace('\\', '/')) }}" alt="" id="fullphoto" ondblclick="doubletap()">
+        <div class="div1">
+            <form action="{{ url_for('like_post',post_id=post.post_id) }}" method="post">
+                <button id="like" onclick="likeee()">
+                {% if like %}
+                <img src="../static/img/heart-flat-icon.png" alt="" style="width: 70px;height: 50px;">
+                {% else %}
+                <img src="../static/img/heart-outline-icon.png" alt="" style="width: 70px;height: 50px;">
+                {% endif %}
+                </button>
+            </form>
+            <form action="{{ url_for('save_post',post_id=post.post_id) }}" method="post">
+                <button id="save" onclick="toggleSave()">
+                {% if save %}
+                <img src="../static/img/bookmark-minus-solid-icon.png" alt="" style="width: 70px;height: 50px;">
+                {% else %}
+                <img src="../static/img/bookmark-saved-icon.png" alt="" style="width: 70px;height: 50px;">
+                {% endif %}
+                </button>
+            </form>
+        </div>
+        <div class="comments">
+            {% for comment in comments %}
+            <div class="comment">
+                <div class="comment_name">
+                <a href="{{ url_for('othersprofile', acc_id=comment.account.acc_id) }}"><h6>{{comment.username}}</h6></a>
+                <p>{{comment.cmnt}}</p>
+                </div>
+                <div>
+                {% if (current_user.is_authenticated and comment.account.user_id == current_user.user_id) or post.acc_id == current_user.account.acc_id %}
+                <form action="{{ url_for('delete_comment',id=comment.id) }}" method="post">
+                <button  type="submit" style="border: none;background-color: transparent;"><img src="../static/img/red-trash-can-icon.png" alt="" style="width: 50px;height: 30px;"></button>
+                </form>
+                {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <form action="{{ url_for('add_comment',post_id=post.post_id) }}" method="post">
+        <div id="commentarea"><input type="textarea" placeholder="comment" name="comment"><button type="submit">comment</button></div>
+        </form>
+        </div>
+    </main>
+    <script src="../static/js/home.js"></script>
+    <script>
+        var like = document.getElementById('like');
+        var save = document.getElementById('save');
+        var notlike = `<img src="../static/img/heart-outline-icon.png" alt="" style="width: 70px;height: 50px;">`;
+        var notsave = `<img src="../static/img/bookmark-saved-icon.png" alt="" style="width: 70px;height: 50px;">`;
+        var likeimg = `<img src="../static/img/heart-flat-icon.png" alt="" style="width: 70px;height: 50px;">`;
+        var saveimg = `<img src="../static/img/bookmark-minus-solid-icon.png" alt="" style="width: 70px;height: 50px;">`;
+    
+        var liked = false;
+        var saved = false;
+    
+        function likeee(postId) {
+            fetch(`/like_post/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error(data.error);
+                } else {
+                    liked = !liked;
+                    like.innerHTML = liked ? likeimg : notlike;
+                    document.getElementById(`likes-count-${postId}`).innerText = data.likes_count;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    
+        function doubletap(postId) {
+            likeee(postId); // Reuse the likeee function for double tap
+        }
+    
+        function saveee(postId) {
+            fetch('/save_post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ post_id: postId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    saved = true;
+                    save.innerHTML = saveimg;
+                } else {
+                    console.error('Failed to save post.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    
+        function unsaveee(postId) {
+            fetch('/unsave_post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ post_id: postId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    saved = false;
+                    save.innerHTML = notsave;
+                } else {
+                    console.error('Failed to unsave post.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    
+        function toggleSave(postId) {
+            if (saved) {
+                unsaveee(postId);
+            } else {
+                saveee(postId);
+            }
+        }
+    
+        document.getElementById('save-button').addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            toggleSave(postId);
+        });
+    
+        document.getElementById('deleteBtn').addEventListener('click', function() {
+            const postId = this.dataset.postId; // Retrieve post ID from data attribute
+            fetch('/delete_post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'post_id': postId // Pass post ID as form data
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful response
+                    console.log('Post deleted successfully.');
+                    // Optionally, update the UI or take other actions
+                } else {
+                    // Handle error response
+                    console.error('Failed to delete post.');
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                console.error('Network error:', error);
+            });
+        });
+
+
+        function confirmDelete(commentId) {
+            if (confirm("Are you sure you want to delete this comment?")) {
+                document.getElementById("deleteForm" + commentId).submit();
+            }
+            return false; // Prevent default right-click menu from appearing
+        }
+    </script>
+    
+    
+</body>
+</html>

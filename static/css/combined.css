@@ -1,0 +1,75 @@
+body{
+    margin: 0px;
+    font-family:cursive;
+    background-color: white;
+}
+header{
+    position: fixed;
+    width: 100%;
+    color: white;
+    background-color: #2b124c;
+    top: 0;
+}
+::placeholder{
+    color: #2b124c;
+}
+footer{
+    position: fixed;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    background-color: #2b124c;
+    border-top: 1px solid;
+}
+footer div{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+footer div h1 a{
+    color: rgb(145, 132, 132);
+    text-decoration: none;
+}
+.active{
+    background: white;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px white, /* Glowing shadow */
+            0 0 20px white,
+            0 0 30px white,
+            0 0 40px white,
+            0 0 50px white,
+            0 0 60px white,
+            0 0 70px white,
+            0 0 80px white;
+    animation: glow 2s infinite alternate;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #2b124c;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 10px white, /* Initial glowing shadow */
+                   0 0 20px white,
+                   0 0 30px white;
+    }
+    
+    to {
+      text-shadow: 0 0 20px white, /* Final glowing shadow */
+                   0 0 40px white,
+                   0 0 60px white;
+    }
+  }

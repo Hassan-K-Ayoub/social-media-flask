@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/combined.css">
+    <link rel="stylesheet" href="../static/css/profilestyle.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='uploads/' + account.img.replace('\\', '/')) }}" alt="" class="profilephoto">
+        <pre id="bio">{{ account.bio }}</pre>
+        <div class="followinfo">
+            <a href="{{ url_for('follower',acc_id=current_user.account.acc_id) }}"><div>
+                <h3>{{account.follower_count}}</h3>
+                <h4>followers</h4>
+            </div>
+            </a>
+            <a href="{{ url_for('following',acc_id=current_user.account.acc_id) }}"><div>
+                <h3>{{account.following_count}}</h3>
+                <h4>following</h4>
+            </div>
+            </a>
+        </div>
+        <div class="actions">
+            <form action="{{ url_for('edit_account', acc_id=account.acc_id) }}">
+            <button type="submit">Edit profile</button>
+            </form>
+            <form action="{{url_for('notifications')}}">
+            <button>See Notifications</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        {% for post in account.posts %}
+        <a href="{{ url_for('fullpost',post_id=post.post_id) }}"><img src="{{ url_for('static', filename='uploads/' + post.img.replace('\\', '/')) }}" alt=""></a>
+        {% endfor %}
+    </main>
+
+    <footer>
+        <div>
+            <h1><a href="{{ url_for('index') }}">Home</a></h1>
+            <h1><a href="{{ url_for('explore') }}">Explore</a></h1>
+            <h1><a href="{{ url_for('profile') }}" class="active">Profile</a></h1>
+    </div>
+    </footer>
+
+    <script src="../static/js/home.js"></script>
+</body>
+</html>

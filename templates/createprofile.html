@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/edit.css">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="formdiv">
+        <h1>Create Your Profile</h1>
+        <form action="{{ url_for('create_account') }}" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="img">Choose profile picture</label>
+                <input type="file" id="img" name="img">
+            </div>
+
+            <div>
+                <label for="username">Choose a username</label>
+                <input type="text" name="username" id="username">
+            </div>
+
+            <div>
+                <label for="bio">Put your bio</label>
+                <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
+            </div>
+            <div class="submitchange">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        <div class="submitchange">
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+    <script src="../static/js/home.js"></script>
+</body>
+</html>

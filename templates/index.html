@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/indexstyle.css">
+    <link rel="stylesheet" href="../static/css/combined.css">
+    <style>
+        option{
+            color: #2b124c;
+        }
+        select{
+            font-family: cursive;
+            font-size: 15px;
+            background-color: transparent;
+            color: white; 
+            border: none; 
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="webname">
+                <button id="navbarBtn"><img src="../static/img/navbarButton.png" alt="" style="width: 20px;"></button>
+                <h1>Memo Verse</h1>
+            </div>
+            <form id="logout-form" action="{{ url_for('logout') }}" style="display:none;">
+                <!-- Include CSRF token if required by your framework -->
+                
+            </form>
+            
+            <select name="user_options" id="user_options" onchange="handleSelectChange()">
+                <option value="1" selected>{{current_user.account.username}}</option>
+                <option value="logout">Log out</option>
+            </select>
+        </nav>
+    </header>
+        <div class="navbar nav1">
+            <div class="navbar main-nav">
+                <button id="closeNavbar">X</button>
+                <h1>Memo Verse</h1>
+            <ul>
+                <li><a href="{{ url_for('notifications') }}">Notifications</a></li>
+                <li><a href="{{ url_for('add_post') }}">Add Post</a></li>
+                <li><a href="{{ url_for('saved') }}">Saved Posts</a></li>
+            </ul>
+        </div>
+    </div>
+    <main class="indexmain">
+        {% for item in posts_with_comments %}
+        <div class="card">
+            <!-- Post image linking to full post -->
+            <a href="{{ url_for('fullpost', post_id=item['post'].post_id) }}">
+                <img src="{{ url_for('static', filename='uploads/' + item['post'].img.replace('\\', '/')) }}" alt="" class="postimg">
+            </a>
+
+            <!-- Username linking to user profile -->
+            <a href="{{ url_for('othersprofile', acc_id=item['post'].acc_id) }}">
+                <h1 class="username">{{ item['post'].account.username }}</h1>
+            </a>
+
+            <div class="large-view">
+                <!-- Additional post details -->
+                <a href="{{ url_for('othersprofile', acc_id=item['post'].acc_id) }}"><h3>{{ item['post'].account.username }}</h3></a>
+                <h5>{{ item['post'].caption }}</h5>
+                <h6>{{ item['post'].likes_count }} likes</h6>
+
+                <!-- Latest comments section -->
+                <div class="comments">
+                    {% for comment in item['latest_comments'] %}
+                    <div class="comment">
+                        <h6>{{ comment.username }}</h6>
+                        <p>{{ comment.cmnt }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Comment form -->
+                <form action="{{ url_for('add_comment', post_id=item['post'].post_id) }}" method="post">
+                    <div id="commentarea">
+                        <input type="textarea" placeholder="comment" name="comment">
+                        <button type="submit">comment</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Small view icons -->
+            <div class="small-view">
+                <img src="../static/img/emptyheart.png" alt="">
+                <img src="../static/img/comment.png" alt="">
+                <img src="../static/img/share.png" alt="">
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+    <footer>
+        <div>
+        <h1><a href="{{ url_for('index') }}" class="active">Home</a></h1>
+        <h1><a href="{{ url_for('explore') }}">Explore</a></h1>
+        <h1><a href="{{ url_for('profile') }}">Profile</a></h1>
+    </div>
+    </footer>
+    <script>
+        const openbtn = document.querySelector("#navbarBtn");
+    const closebtn = document.querySelector("#closeNavbar");
+    const nav = document.querySelectorAll('.navbar');
+
+openbtn.addEventListener('click',()=>{
+   nav.forEach(nav => nav.classList.add('visible'))
+})
+
+closebtn.addEventListener('click',()=>{
+   nav.forEach(nav => nav.classList.remove("visible"))
+})
+
+
+        function handleSelectChange() {
+            var select = document.getElementById('user_options');
+            if (select.value === 'logout') {
+                document.getElementById('logout-form').submit();
+            }
+        }
+    </script>
+</body>
+</html>

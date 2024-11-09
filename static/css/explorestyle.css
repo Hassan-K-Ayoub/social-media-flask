@@ -1,0 +1,60 @@
+header input{
+    width: 85%;
+    margin: 10px;
+    height: 30px;
+    border-radius: 15px;
+    border-color: #2b124c;
+}
+header{
+    display: flex;
+    flex-direction: column;
+}
+header button{
+    height: 35px;
+    width: 10%;
+    color: #2b124c;
+    background-color: white;
+    border: 1px solid ;
+    border-radius: 20px;
+    transition: box-shadow 0.3s ease;
+}
+header button:hover{
+    box-shadow: 0 0 10px white, 
+            0 0 20px white;
+}
+.searchmain{
+    margin-top: 30px;
+    margin-bottom: 100px;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+}
+.searchmain dl{
+    border: 2px solid;
+    border-color: #2b124c;
+    margin-bottom: 50px;
+    background-color: white;
+}
+.searchmain dt{
+    text-align: start;
+    margin-bottom: 10px;
+}
+.searchmain dd img{
+    width: 250px;
+    height: 250px;
+    margin-left: 10px;
+    border: 2px solid;
+    border-color: #2b124c;
+}
+.searchmain dd{
+    margin-left: 5px;
+    text-align: start;
+    display: flex;
+    overflow-x: scroll;
+}
+
+@media screen and (max-width:660px){
+    header input{
+        width: 70%;
+    }
+}

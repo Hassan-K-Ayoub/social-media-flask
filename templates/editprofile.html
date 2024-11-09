@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/edit.css">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="formdiv">
+        <h1>Edit Profile</h1>
+        <form action="{{ url_for('edit_account', acc_id=account.acc_id) }}" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="img">Change profile picture</label>
+                <input type="file" id="file" name="img">
+            </div>
+            {% if account.img %}
+                    <div>
+                        <img src="{{ url_for('static', filename='uploads/' + account.img.replace('\\','/')) }}" alt="Current profile picture" width="150" height="150">
+                    </div>
+                {% endif %}
+
+            <div>
+                <label for="username">Change your username</label>
+                <input type="text" name="username" id="username" value="{{ account.username }}">
+            </div>
+
+            <div>
+                <label for="bio">Change your bio</label>
+                <textarea name="bio" id="bio" cols="30" rows="10">{{ account.bio }}</textarea>
+            </div>
+            
+            <div class="submitchange">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        <div class="submitchange">
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+    <script src="../static/js/home.js"></script>
+</body>
+</html>

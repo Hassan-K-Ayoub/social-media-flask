@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/combined2.css">
+    <link rel="stylesheet" href="../static/css/combined.css">
+    <title>Document</title>
+    <style>
+        main{
+            display: flex;
+            flex-direction: column;
+            border: none;
+            margin-top: 10vh;
+        }
+        .divmain{
+            display: flex;
+            border-radius: 25px;
+            border: 3px solid #603d8c;
+            width: 90%;
+            height: 10%;
+            margin-top: 5px;
+            align-content: center;
+            align-items: center;
+            align-self: center;
+            justify-content: space-between;
+        }
+        .div1{
+            display: flex;
+            justify-content: center;
+            padding-left: 3px;
+        }
+        .div2{
+            display: flex;
+            margin-left: 10px;
+            align-content: end;
+        }
+        img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            align-self: center;
+        }
+        .indiv{
+            width: 60px;
+            height: 60px;
+            border-radius: 0%;    
+        }
+        button{
+            height: 50px;
+            width: 100px;
+            color: white;
+            background-color: #603d8c;
+            border: 5px solid;
+            border-radius: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="webname">
+                <button id="navbarBtn" onclick="goBack()"><img src="../static/img/backarrow.png" alt=""></button>
+                <h1>Notifications</h1>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        
+        {% for account in results %}
+        <div class="divmain">
+            <a href="{{ url_for('othersprofile', acc_id=account.acc_id) }}">
+                <div class="div1">
+                    <img src="../static/img/newheromercedes.jpg" alt="">
+                    <h3>{{account.username}}</h3>
+                </div>
+                </a>
+                {% if account.acc_id != current_user.account.acc_id %}
+            <div class="div2">
+                <form id="followForm" action="{{ url_for('follow',acc_id=account.acc_id) }}" method="post">
+                    <button id="followButton" class="following" data-acc-id="{{ acc_id }}">
+                        {% if followinghim %}
+                            following
+                        {% elif hefollowing %}
+                            follow back
+                        {% else %}
+                            follow
+                        {% endif %}
+                    </button>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </main>
+
+    <script src="../static/js/home.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#followbutton').click(function() {
+            var accId = $(this).data('acc-id');
+
+            $.ajax({
+                url: '/follow',
+                method: 'POST',
+                data: { acc_id: accId },
+                success: function(response) {
+                    if (response.success) {
+                        $('#followbutton').text(response.is_following ? 'Following' : 'Follow');
+                    } else {
+                        alert('Failed to toggle follow status.');
+                    }
+                },
+                error: function() {
+                alert('Failed to toggle follow status.');
+                }
+            });
+        });
+        });
+
+$(document).ready(function() {
+   $('#followbutton').click(function() {
+       var accountId = $(this).data('acc-id');
+       var btn = $(this);
+       $.ajax({
+           url: '/follow_back',
+           method: 'POST',
+           data: { acc_id: accountId },
+           success: function(response) {
+               if (response.success) {
+                   btn.text('Following');
+                   btn.prop('disabled', true);
+               } else {
+                   alert('Failed to follow back.');
+               }
+           },
+           error: function() {
+               alert('Failed to follow back.');
+           }
+       });
+   });
+});
+    </script>
+</body>
+</html>

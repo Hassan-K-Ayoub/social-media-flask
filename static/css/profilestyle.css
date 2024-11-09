@@ -1,0 +1,88 @@
+header{
+    height: 30vh;
+    display: inline-grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 50% 50%;
+    top: 0;
+}
+header .profilephoto{
+    width: 150px;
+    height: 100%;
+    border: 2PX solid white;
+    border-radius: 50%;
+    grid-area: 1/1/1/2;
+    grid-column: span 2;
+    margin: 5px;
+    justify-self: center;
+}
+header pre{
+    padding: 5px;
+    grid-area: 2/1/2/2;
+    grid-column: span 2;
+    overflow-y: scroll;
+    justify-self: center;
+    margin-left: 20px;
+}
+
+header pre::-webkit-scrollbar {
+    width: 5px;
+}
+header pre::-webkit-scrollbar-track {
+    background: transparent;
+}
+header pre::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.heading{
+    height: 40vh;
+}
+header div{
+    text-align: center;
+}
+.followinfo{
+    display: flex;
+    justify-content: space-around;
+    grid-area: 1/3/1/4;
+    grid-column: span 2;
+}
+.actions{
+    display: flex;
+    justify-content: space-around;
+    grid-area: 2/3/2/4;
+    grid-column: span 2;
+}
+.actions button{
+    height: 50px;
+    width: 100px;
+    color: white;
+    background-color: #603d8c;
+    border: 5px solid ;
+    border-radius: 20px;
+    transition: box-shadow 0.3s ease;
+}
+.actions button:hover{
+    box-shadow: 0 0 10px white, 
+            0 0 20px white;
+}
+main{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20%;
+    grid-gap: 2px;
+    margin-bottom: 100px;
+    margin-top: 30vh;
+    justify-content: center;
+}
+main img{
+    width: 100%;
+    height: 100%;
+    border: 2px solid #2b124c;
+}

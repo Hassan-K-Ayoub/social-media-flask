@@ -1,0 +1,54 @@
+body{
+    margin: 0;
+    font-family:cursive;
+}
+header{
+    position: relative;
+}
+nav{
+display: flex;
+justify-content: space-between;
+padding-left: 10px;
+padding-right: 10px;
+background-color: #2b124c;
+color: white;
+}
+.webname{
+display: flex;
+}
+.webname a{
+    color: white;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+header button{
+width: fit-content;
+height: fit-content;
+margin-top: 5px;
+margin-left: 5px;
+align-self: center;
+background-color: transparent;
+border: none;
+}
+main{
+    text-align: center;
+    margin-left: 22%;
+    margin-right: 22%;
+    border-left: #2b124c 2px solid;
+    border-right: #2b124c 2px solid;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #2b124c;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+  }

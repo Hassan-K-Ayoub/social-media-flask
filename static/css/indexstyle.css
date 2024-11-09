@@ -1,0 +1,245 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+nav button{
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+.webname{
+    display: flex;
+}
+.heading{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    background-image: linear-gradient(126deg, rgb(157,7,213),rgb(157,7,213),rgb(246,255,0));
+}
+header{
+    top: 0;
+}
+.navbar button{
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 40px;
+    right: 30px;
+    opacity: 0.3;
+}
+.navbar ul{
+    list-style: none;
+    padding: 0;
+}
+.navbar ul li{
+    padding: 5px;
+}
+.navbar ul a{
+    margin: 20px 0;
+    color: #2b124c;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: 1;
+}
+.visible{
+    transform: translateX(0%);
+}
+.nav1{
+    background-color: #2b124c;
+    width: 60%;
+    max-width: 480px;
+    min-width: 320px;
+    transition-delay: 0.3s;
+}
+.navbar .nav1 .visible{
+    transition-delay: 0s;
+}
+.main-nav{
+    position: relative;
+    background-color: white;
+    width: 80%;
+    padding: 40px;
+    transition-delay: 0s;
+}
+.nav1 .navbar .main-nav .visible{
+    transition-delay: 0.3s;
+}
+.indexmain{
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15vh;
+    margin-bottom: 130px;
+}
+.card{
+    display: inline-flex;
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: #2b124c;
+    width: 60%;
+    height: 500px;
+    background-color: white;
+    margin-bottom: 50px;
+}
+.card div{
+    display: inline-flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 0px;
+    width: 500px;
+    border-left: 2px solid;
+    border-color: #2b124c;
+}
+.card img{
+    width: 500px;
+    height: 100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.card .username{
+    display: none;
+    text-align: start;
+    padding-left: 8px;
+    font-size: 20px;
+}
+.card div h5{
+    padding-left: 5px;
+    width: 100%;
+}
+.card a{
+    text-decoration: none;
+    color: #2b124c;
+}
+.card div h3{
+    color: #2b124c;
+    padding-left: 5px;
+    width: 100%;
+    text-decoration: none;
+}
+.card div h6{
+    padding-left: 5px;
+    width: 100%;
+    font-size: 15px;
+}
+.card div > p{
+    padding-left: 5px;
+    width: 90%;
+    overflow-y: scroll;
+}
+.card div > p::-webkit-scrollbar{
+    width: 5px;
+}
+
+.card  .comments{
+    background-size: cover;
+    border-top: 2px solid;
+    border-left: none;
+    border-color: #2b124c;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.comments .comment{
+    padding-left: 0px;
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid #2b124c;
+    border-left: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+}
+.comment h6{
+    font-size: 18px;
+}
+.comment p{
+    align-self: flex-start;
+}
+#commentarea{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-left: none;
+}
+#commentarea input{
+    width: 70%;
+}
+#commentarea button{
+    width: 30%;
+    background-color: #2b124c;
+    color: white;
+    border-bottom-right-radius: 10px;
+}
+
+.card .small-view{
+    display: none;
+}
+
+@media screen and (max-width:1300px){
+    .card img{
+        width: 400px;
+    }
+}
+
+@media screen and (max-width:1050px){
+    .card img{
+        width: 300px;
+    }
+}
+
+@media screen and (max-width:800px){
+    .card{
+        display: inline-flex;
+        flex-direction: column;
+        border:2px solid;
+        border-radius: 10px;
+        border-color: #2b124c;
+        width: 50%;
+        height: fit-content;
+    }
+    .card:hover .username{
+        display: block;
+    }
+    .card div{
+       display: none;
+    }
+    .card .postimg{
+        width: 100%;
+        border-bottom: 2px solid;
+        border-color: #2b124c;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 7px;
+        border-top-left-radius: 7px;
+    }
+    .card .small-view{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+        border-left: none;
+    }
+    .card .small-view img{
+        width: 10%;
+    }
+}
